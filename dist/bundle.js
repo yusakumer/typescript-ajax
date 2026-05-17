@@ -58,8 +58,10 @@ const createElement = (elementName, textContent) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   appendUserList: () => (/* binding */ appendUserList),
 /* harmony export */   fetchUser: () => (/* binding */ fetchUser)
 /* harmony export */ });
+/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom */ "./src/utils/dom.ts");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -69,8 +71,10 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+
 /**
  * APIからユーザー一覧を取得する
+ * @returns userList
  */
 const fetchUser = () => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield fetch("https://jsonplaceholder.typicode.com/users");
@@ -80,6 +84,16 @@ const fetchUser = () => __awaiter(void 0, void 0, void 0, function* () {
     const userList = yield res.json();
     return userList;
 });
+/**
+ * DOMにユーザー一覧を出力する
+ */
+const appendUserList = (userList) => {
+    userList.forEach(user => {
+        const li = (0,_dom__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", user.name);
+        const ul = (0,_dom__WEBPACK_IMPORTED_MODULE_0__.getElementById)("user-list");
+        ul.appendChild(li);
+    });
+};
 
 
 /***/ }
@@ -171,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     userButton.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
         //APIからユーザー一覧を取得
         const userList = yield (0,_utils_user__WEBPACK_IMPORTED_MODULE_1__.fetchUser)();
-        console.log(userList);
+        //バリデーション
         //ユーザー一覧をDOMに出力
     }));
 });

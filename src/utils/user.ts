@@ -1,3 +1,5 @@
+import {createElement, getElementById} from "./dom";
+
 type User = {
     id: number;
     name: string;
@@ -31,6 +33,7 @@ type Company = {
 
 /**
  * APIからユーザー一覧を取得する
+ * @returns userList
  */
 
 export const fetchUser = async () => {
@@ -40,4 +43,16 @@ export const fetchUser = async () => {
     }
     const userList:User[]= await res.json();
     return userList;
+}
+
+/**
+ * DOMにユーザー一覧を出力する
+ */
+
+export const appendUserList = (userList:User[]) => {
+    userList.forEach(user => {
+        const li = createElement("li",user.name);
+        const ul = getElementById("user-list");
+        ul.appendChild(li);
+    })
 }
